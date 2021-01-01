@@ -3,7 +3,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,5 +72,27 @@ class RestaurantTest {
         r.addToMenu("Sweet corn soup",119);
         r.addToMenu("Vegetable lasagne", 269);
         return r;
+    }
+
+    // <<<<<<<<<, ORDER >>>>>>>>>>>>>>>>>
+    @Test
+    public void get_order_value_should_increase_order_price_if_new_item_added_in_list(){
+        restaurant = get_test_restaurent_input();
+        List<String> item = new ArrayList<String>();
+        item.add("Sweet corn soup");
+        int initial_price = restaurant.getOrderValue(item);
+        item.add("Vegetable lasagne");
+        assertTrue(initial_price < restaurant.getOrderValue(item));
+    }
+
+    @Test
+    public void get_order_value_should_decrease_order_price_if_old_item_removed_from_list(){
+        restaurant = get_test_restaurent_input();
+        List<String> item = new ArrayList<String>();
+        item.add("Sweet corn soup");
+        item.add("Vegetable lasagne");
+        int initial_price = restaurant.getOrderValue(item);
+        item.remove(1);
+        assertTrue(initial_price > restaurant.getOrderValue(item));
     }
 }
